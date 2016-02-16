@@ -89,8 +89,10 @@ module WickedPdfHelper
     end
 
     def read_asset(source)
+      Rails.logger.debug ['read_asset', source]
       if precompiled_or_absolute_asset?(source)
         if (pathname = asset_pathname(source)) =~ URI_REGEXP
+          Rails.logger.debug ['read_from_uri', pathname]
           read_from_uri(pathname)
         elsif File.file?(pathname)
           IO.read(pathname)
